@@ -98,11 +98,14 @@ function updateUI() {
     // The roll button hides when the turn is over (0 rolls left).
     // The next turn button hides BEFORE the first roll (when rolls left is 3).
     rollBtn.classList.toggle('hidden', game.isTurnOver());
-    nextTurnBtn.classList.toggle('hidden', game.rollsLeft === 4);
+
+    // Zach Update. I'm actually crying laughing right now because I changed the number from when the button hides itself to a -1, which
+    // I thought was outrageous, but it actually ended up working hahahaha. For some reason I swear I remember not being able to use negative numbers like this.
+    nextTurnBtn.classList.toggle('hidden', game.rollsLeft === -1);
 
     // Zach Update. Added this to make it so the die has to be chosen before continuing to roll but I am having
-    // issues with it greying out even when the die was chosen (specifically when you have 3 rolls left)
-    if (game.rollsLeft < 4 && game.heldThisRoll === 0) {
+    // issues with it greying out even when the die was chosen.
+    if (game.rollsLeft < 5 && game.heldThisRoll === 1) {
         rollBtn.disabled = true;
     } else {
         rollBtn.disabled = false;
@@ -125,7 +128,9 @@ function renderDice() {
     
     // The player's very first view of the board happens before they roll.
     // Since they always start with 3 rolls, we know they haven't rolled yet.
-    const isFirstRoll = game.rollsLeft === 3;
+
+    // Zach Update. I have updated this "rollsLeft" to 6 so the questions marks that were appearing on the dice after the second roll are now gone.
+    const isFirstRoll = game.rollsLeft === 6;
 
     // HTML Decimal codes for dice faces 1-6 (⚀, ⚁, etc.)
     // These specific numbers (9856-9861) act as shortcuts for the browser to render 

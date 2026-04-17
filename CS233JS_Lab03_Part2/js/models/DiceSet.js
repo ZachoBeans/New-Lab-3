@@ -3,6 +3,7 @@ import Die from './Die.js';
 export default class DiceSet {
     constructor() {
         this.dice = [];
+
         // Zach Update. Updated this for loop to include 6 dice.
         for (let i = 0; i < 6; i++) {
             this.dice.push(new Die());
@@ -22,6 +23,8 @@ export default class DiceSet {
 
     evaluateDice() {
         // Reset state so it can be dynamically evaluated based on what the user currently holds.
+
+        // Zach Update. Updated this to has1 and has4 instead of the ship, captain and crew.
         this.has1 = false;
         this.has4 = false;
 
@@ -88,23 +91,22 @@ export default class DiceSet {
 
     // Validates if the player is legally allowed to un-keep a clicked die.
 
-    // Zach Update. Updated the values and has variables. Don't know if I did it right. Taking this method out completely makes it so
-    // you cannot unclick a die. Seemingly changing the variables to the ones I created doesn't make the ones clicked (like a 1 and a 4)
-    // un clickable. But all in all, the player should have the choice to unclick the die anyway.
+    // Zach Update. I have figured out what I was doing wrong and have fixed the issue. You should now not be able to
+    // unclick a 1 or a 4 once clicked. You can, however, unclick one of them if there is a duplicate one clicked.
     canUnhold(die) {
         if (die.value === 1 && this.has1) {
             let held6Count = 0;
             for (const d of this.dice) {
                 if (d.isHeld && d.value === 1) held6Count++;
             }
-            if (held6Count === 4) return "You cannot remove your Ship while a Captain is held!";
+            if (held6Count === 1) return "You cannot unclick a 1! You need it to score points!";
         }
         if (die.value === 4 && this.has4) {
             let held5Count = 0;
             for (const d of this.dice) {
                 if (d.isHeld && d.value === 4) held5Count++;
             }
-            if (held5Count === 4) return "You cannot remove your Captain while a Crew is held!";
+            if (held5Count === 1) return "You cannot unclick a 4! You need it to score points!";
         }
         return true;
     }
