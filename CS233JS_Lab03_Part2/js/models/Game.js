@@ -28,7 +28,9 @@ export default class Game {
     }
 
     resetTurnState() {
-        this.rollsLeft = 3;
+
+        // Zach Update. I am trying to fix the amount of rolls in the turn without it resetting the dice.
+        this.rollsLeft = 5; 
         this.diceSet.reset();
     }
 
@@ -37,6 +39,7 @@ export default class Game {
     }
 
     rollDice() {
+        this.heldThisRoll = 0;
         if (this.rollsLeft > 0) {
             this.diceSet.rollAll();
             this.rollsLeft--;
