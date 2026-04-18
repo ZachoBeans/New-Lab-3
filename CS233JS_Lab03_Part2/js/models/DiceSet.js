@@ -1,3 +1,5 @@
+// Zach Update. Many modifications were needed for this file. I have included those changes under each comment with "Zach Update".
+
 import Die from './Die.js';
 
 export default class DiceSet {
@@ -82,10 +84,12 @@ export default class DiceSet {
 
     // Validates if the player is legally allowed to hold a newly clicked die.
     
-    // Zach Update. I have updated this canHold method to verify if the die is already being held.
+    // Zach Updated Version. canHold now just returns true. I have commented out what I had and kept it in so you could see why I changed it.
+    // I was originally going to have it state that additonal 1s and 4s counted as points, but because of these if statements, it didn't actually
+    // even let you keep the 1s and 4s if you wanted, which defeated the whole purpose of that statement itself. I think I created a paradox hahaha.
      canHold(die) {
-        if (die.value === 1 && this.has1 && !this.isQualified()) return "You already have a 1! Additional 1s count for points!";
-        if (die.value === 4 && this.has4 && !this.isQualified()) return "You already have a 4! Additional 4s count for points!";
+        // if (die.value === 1 && this.has1 && !this.isQualified()) return "You already have a 1! Additional 1s count for points!";
+        // if (die.value === 4 && this.has4 && !this.isQualified()) return "You already have a 4! Additional 4s count for points!";
         return true;
     }
 

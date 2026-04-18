@@ -1,3 +1,13 @@
+// Hello, Zach here. I have used the reference "Ship, Captain, Crew" project and modified the code in almost all the files. There are some that I didn't touch
+// because there was no need to. (Player.js and Die.js were not modified).
+
+// For each of my additions or modifications to the code, to make it easy, I have added a "Zach Update" comment next to the rest of the comment that explains
+// what I am doing and why.
+
+// This whole project (including the js files under the models folder) were last updated on 4/18/26 and it was modified by Zach Snyder.
+// Notice: I did use the help of AI to help point out areas that I couldn't find in this code (because this was just a massive amount of code that I'm not used to seeing).
+
+
 import Game from './models/Game.js';
 // Written by Brian Bird, 4/10/2026 with AI assistance from Gemini 3.1 in Antigravity.
 
@@ -103,13 +113,10 @@ function updateUI() {
     // I thought was outrageous, but it actually ended up working hahahaha. For some reason I swear I remember not being able to use negative numbers like this.
     nextTurnBtn.classList.toggle('hidden', game.rollsLeft === -1);
 
-    // Zach Update. Added this to make it so the die has to be chosen before continuing to roll but I am having
-    // issues with it greying out even when the die was chosen.
-    if (game.rollsLeft < 5 && game.heldThisRoll === 1) {
-        rollBtn.disabled = true;
-    } else {
-        rollBtn.disabled = false;
-    }
+    // Zach Update. Added this to make it so the die has to be chosen before continuing to roll.
+    rollBtn.disabled = (
+    game.rollsLeft < 5 && !game.hasHeldThisRoll
+)   ;
 
     // Dynamic Button text for keeping score
     if (game.diceSet.isQualified()) {
@@ -130,7 +137,7 @@ function renderDice() {
     // Since they always start with 3 rolls, we know they haven't rolled yet.
 
     // Zach Update. I have updated this "rollsLeft" to 6 so the questions marks that were appearing on the dice after the second roll are now gone.
-    const isFirstRoll = game.rollsLeft === 6;
+    const isFirstRoll = game.rollsLeft === 5;
 
     // HTML Decimal codes for dice faces 1-6 (⚀, ⚁, etc.)
     // These specific numbers (9856-9861) act as shortcuts for the browser to render 
@@ -164,6 +171,9 @@ function renderDice() {
             showMessage(""); // Clear any previous error message on a success
             die.toggleHold();
             game.diceSet.evaluateDice(); // Check if this new hold triggers a qualifier!
+
+            // Zach Update. Added this here to make it so the die has to be chosen to continue rolling.
+            game.hasHeldThisRoll = true;
             
             // Re-render the UI loop to reflect the new state
             renderDice();
@@ -180,13 +190,13 @@ function renderDice() {
         }
         
         // Inject the appropriate HTML entity to graphically render the die face.
-        if (isFirstRoll) {
+        if (die.value == null) {
             dieEl.textContent = '?';
         } else {
-            // Since our random dice rolls yield 1 through 6, we can use that exact value 
-            // as the index to grab the corresponding HTML entity from our array.
             dieEl.innerHTML = diceEntities[die.value];
         }
+            // Since our random dice rolls yield 1 through 6, we can use that exact value 
+            // as the index to grab the corresponding HTML entity from our array.
         
         diceContainer.appendChild(dieEl);
     }

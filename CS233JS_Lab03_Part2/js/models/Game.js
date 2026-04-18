@@ -1,3 +1,5 @@
+// Zach Update. Some modifications were needed for this file. I have included those changes under each comment with "Zach Update".
+
 import DiceSet from './DiceSet.js';
 import Player from './Player.js';
 // Written by Brian Bird, 4/10/2026 using Gemini 3.1 in Antigravity.
@@ -14,6 +16,10 @@ export default class Game {
 
         // Initialize turn-specific state properties
         this.resetTurnState();
+        
+        // Zach Update. Adding this to make it so that after every roll, it detects if a die was chosen so you can't roll until one is chosen.
+        // This is reset every time in "rollDice".
+        this.hasHeldThisRoll = false;
     }
 
     startNewGame(playerNames) {
@@ -25,6 +31,10 @@ export default class Game {
         this.currentPlayerIndex = 0;
         this.isGameOver = false;
         this.resetTurnState();
+
+        // Zach Update. I have added this so upon clicking "start game" the dice are ALREADY rolled.
+        this.diceSet.rollAll();
+        this.rollsLeft--;
     }
 
     resetTurnState() {
@@ -43,6 +53,9 @@ export default class Game {
         if (this.rollsLeft > 0) {
             this.diceSet.rollAll();
             this.rollsLeft--;
+
+            // Zach Update. Adding this to make it so that after every roll, it detects if a die was chosen so you can't roll until one is chosen.
+            this.hasHeldThisRoll = false;
         }
     }
 
@@ -68,6 +81,12 @@ export default class Game {
             this.isGameOver = true;
         } else {
             this.resetTurnState();
+            
+
+            // Zach Update. I have added this piece of code to this spot AS WELL as the "startNewGame" so when the second player starts their turn,
+            // it immediately rolls the dice on the first click.
+            this.diceSet.rollAll();
+            this.rollsLeft--;
         }
     }
 
