@@ -33,10 +33,7 @@ class GameLogic {
         // TODO: fill the dominos array with random domino objects and a starting target.
 
         const leftPips = [1, 2, 3, 4];
-        let [leftOne, leftTwo, leftThree, leftFour] = leftPips;
-
         const rightPips = [1, 2, 3, 4, 5];
-        let [rightOne, rightTwo, rightThree, rightFour, rightFive] = rightPips; 
 
         for (const leftPip of leftPips) {
             for (const rightPip of rightPips) {

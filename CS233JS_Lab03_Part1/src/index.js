@@ -20,7 +20,7 @@ const init= () => {
     ui.updateTarget(gameLogic.dominos[gameLogic.currentTargetIndex]);
     ui.updateStatus(gameLogic.lives, gameLogic.removedCount);
     ui.enableAllDominos(handleClick);
-}
+};
 
 function handleClick() {
     const CHECK_DELAY_MS = 1500;
@@ -80,6 +80,6 @@ function handleClick() {
     }
 
     gameLogic.resetPick();
-}
+};
 
 window.onload = init;
